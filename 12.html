@@ -1,0 +1,1290 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Page 9: Superlatives & Weekend Talk - ورقة عمل تفاعلية ناطقة</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;900&family=Kalam:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background: radial-gradient(circle at 50% 0%, #f0fdf4 0%, #eff6ff 50%, #fefce8 100%);
+      min-height: 100vh;
+      color: #1e293b;
+      touch-action: manipulation;
+    }
+
+    .en-font {
+      font-family: 'Fredoka', 'Comic Sans MS', cursive, sans-serif;
+    }
+
+    /* Page Container Frame */
+    .sheet-card {
+      background: #ffffff;
+      border: 4px solid #38bdf8;
+      border-radius: 32px;
+      box-shadow: 0 20px 45px -15px rgba(56, 189, 248, 0.3), 0 0 0 8px #e0f2fe;
+    }
+
+    /* Drop Slots */
+    .drop-slot {
+      min-height: 36px;
+      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .drop-slot.drag-over {
+      background-color: #fef08a !important;
+      border-color: #f59e0b !important;
+      transform: scale(1.05);
+    }
+
+    /* Draggable Word Pills */
+    .word-pill {
+      cursor: grab;
+      user-select: none;
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .word-pill:active {
+      cursor: grabbing;
+      transform: scale(0.95);
+    }
+    .word-pill.selected-pill {
+      box-shadow: 0 0 0 4px #fbbf24, 0 10px 20px -3px rgba(245, 158, 11, 0.4);
+      transform: translateY(-3px) scale(1.05);
+      animation: pulseSelection 1.5s infinite;
+    }
+    @keyframes pulseSelection {
+      0%, 100% { box-shadow: 0 0 0 4px #fbbf24; }
+      50% { box-shadow: 0 0 0 7px #f59e0b; }
+    }
+    .word-pill.used-pill {
+      opacity: 0.35;
+      pointer-events: none;
+      filter: grayscale(80%);
+      transform: scale(0.92);
+      border-style: dashed;
+    }
+
+    /* Instant Feedback Animations */
+    @keyframes popSuccess {
+      0% { transform: scale(0.85); }
+      50% { transform: scale(1.08); }
+      100% { transform: scale(1); }
+    }
+    .pop-success {
+      animation: popSuccess 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    @keyframes shakeSlot {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-8px); }
+      40% { transform: translateX(8px); }
+      60% { transform: translateX(-5px); }
+      80% { transform: translateX(5px); }
+    }
+    .shake-slot {
+      animation: shakeSlot 0.4s ease-in-out;
+    }
+
+    /* Karaoke Synchronized Audio Glow */
+    .k-word {
+      display: inline-block;
+      transition: all 0.15s ease;
+      padding: 0 2px;
+      border-radius: 4px;
+    }
+    .k-active {
+      background-color: #fef08a !important;
+      color: #854d0e !important;
+      font-weight: 800 !important;
+      transform: scale(1.08);
+      box-shadow: 0 0 10px rgba(234, 179, 8, 0.5);
+    }
+    .sync-active-bubble {
+      box-shadow: 0 0 0 4px #38bdf8, 0 10px 25px -5px rgba(56, 189, 248, 0.4) !important;
+      transform: scale(1.02);
+      transition: all 0.2s ease;
+    }
+
+    /* Speech Bubble Tails */
+    .bubble-tail-bottom {
+      position: relative;
+    }
+    .bubble-tail-bottom::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-width: 10px 10px 0 10px;
+      border-style: solid;
+      border-color: currentColor transparent transparent transparent;
+    }
+
+    @media print {
+      body { background: white !important; }
+      .no-print { display: none !important; }
+      .sheet-card { box-shadow: none !important; border-width: 2px !important; }
+    }
+  </style>
+</head>
+<body class="p-2 sm:p-4 md:p-6 lg:p-8 flex justify-center">
+
+  <div class="w-full max-w-4xl flex flex-col items-center">
+
+    <!-- Top Navigation Ribbon (No-Print) -->
+    <div class="no-print w-full flex flex-wrap items-center justify-between gap-3 bg-white/95 backdrop-blur-md px-4 py-3 rounded-2xl shadow-md border border-sky-200 mb-4">
+      <div class="flex items-center gap-2.5">
+        <span class="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-sky-500 text-white text-lg font-black shadow-xs">
+          9
+        </span>
+        <div>
+          <h1 class="text-sm sm:text-base font-black text-slate-800 leading-tight">Superlatives & Weekend • ورقة عمل تفاعلية ناطقة</h1>
+          <p class="text-[11px] text-sky-700 font-bold">سحب وإفلات • استجابة فورية (الإجابة صحيحة / خاطئة) • نطق كندي 🇨🇦</p>
+        </div>
+      </div>
+
+      <div class="flex items-center flex-wrap gap-2">
+        <!-- Canadian Voice Tester -->
+        <button onclick="canadianSpeaker.testVoice()" class="px-3 py-1.5 rounded-xl bg-sky-50 hover:bg-sky-100 border border-sky-300 text-sky-800 text-xs font-black flex items-center gap-1.5 transition">
+          <span>🇨🇦</span>
+          <span>صوت كندي</span>
+        </button>
+
+        <!-- Toggle Arabic Translation Button -->
+        <button id="toggleTransBtn" onclick="toggleTranslations()" class="px-3 py-1.5 rounded-xl bg-amber-50 hover:bg-amber-100 border border-amber-300 text-amber-800 text-xs font-black flex items-center gap-1 transition">
+          <span>🌐</span>
+          <span id="transBtnText">إخفاء الترجمة</span>
+        </button>
+
+        <!-- Reset Button -->
+        <button onclick="resetWorksheet()" class="px-3 py-1.5 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-700 text-xs font-black flex items-center gap-1 transition">
+          <span>🔄</span>
+          <span>إعادة حل</span>
+        </button>
+
+        <!-- Score Badge -->
+        <div class="px-3 py-1.5 rounded-xl bg-emerald-600 text-white text-xs sm:text-sm font-black flex items-center gap-1 shadow-xs">
+          <span>النقاط:</span>
+          <span id="scoreDisplay">0 / 6</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Printable Sheet Body -->
+    <main class="sheet-card w-full p-4 sm:p-7 md:p-9 relative bg-white overflow-hidden">
+      
+      <!-- Top Decorative Icons matching Page 9 banner -->
+      <div class="absolute top-2 left-4 text-2xl select-none opacity-80">🎨 ✏️</div>
+      <div class="absolute top-2 right-4 text-2xl select-none opacity-80">📐 🎒</div>
+
+      <!-- =========================================================================
+           EXERCISE 4: TELL YOUR PARTNER ABOUT YOUR WEEKEND (TWO GIRLS ROLE-PLAY)
+           ========================================================================= -->
+      <section class="mb-10" id="sectionExercise4">
+        
+        <!-- Exercise Title Header (Centered) -->
+        <div class="flex flex-col items-center justify-center text-center mb-5 gap-1.5">
+          <div class="flex items-center justify-center gap-2 flex-wrap" dir="ltr">
+            <span class="w-8 h-8 rounded-full bg-blue-900 text-white font-black text-sm flex items-center justify-center shrink-0 shadow-xs">
+              4
+            </span>
+            <h2 class="en-font font-black text-lg sm:text-xl text-slate-800 flex items-center gap-2 flex-wrap justify-center">
+              <span>Tell your partner about your weekend.</span>
+            </h2>
+          </div>
+          <p class="text-xs sm:text-sm font-bold text-slate-500" dir="rtl">
+            تحدث مع زميلك عن عطلة نهاية الأسبوع • استمع لحوار الصديقتين وتدرب على النطق
+          </p>
+        </div>
+
+        <!-- Role-Play Dialogue Card with the Two Girls -->
+        <div class="relative bg-gradient-to-r from-emerald-50/70 via-white to-amber-50/70 border-3 border-emerald-300 rounded-3xl p-4 sm:p-6 shadow-sm">
+          
+          <div class="flex items-center justify-between mb-4 border-b pb-3 border-emerald-200">
+            <span class="text-xs sm:text-sm font-black text-emerald-900 flex items-center gap-1.5">
+              <span>👭</span>
+              <span>محادثة الصديقتين (نورة وسارة):</span>
+            </span>
+            <button onclick="playEx4FullDialogue()" id="playEx4Btn" class="px-4 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-black shadow-xs flex items-center gap-1.5 transition active:scale-95">
+              <span>▶️</span>
+              <span>تشغيل المحادثة كاملة</span>
+            </button>
+          </div>
+
+          <!-- Dialogue Layout matching Page 4 illustration -->
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-5 items-center" dir="ltr">
+            
+            <!-- LEFT: Girl 1 (Noura - Brunette with backpack) & her two speech bubbles -->
+            <div class="md:col-span-7 flex flex-col sm:flex-row items-center sm:items-start gap-4">
+              <!-- Girl 1 Avatar -->
+              <div class="flex flex-col items-center shrink-0">
+                <div class="w-20 h-20 rounded-3xl bg-pink-100 border-3 border-pink-400 shadow-md flex items-center justify-center text-4xl transform -rotate-3 hover:scale-105 transition">
+                  👧🏻🎒
+                </div>
+                <span class="text-xs font-black text-pink-700 mt-1.5 bg-white px-2 py-0.5 rounded-full shadow-2xs border border-pink-200">Noura</span>
+              </div>
+
+              <!-- Girl 1 Bubbles Stack -->
+              <div class="flex flex-col gap-3 flex-1 w-full">
+                <!-- Bubble 1: Wake up & breakfast -->
+                <div onclick="speakDialogueLine(1)" id="ex4-bubble-1" class="cursor-pointer bg-white border-2 border-emerald-400 p-3 sm:p-3.5 rounded-2xl shadow-xs hover:bg-emerald-50/50 transition relative group">
+                  <div class="flex items-center justify-between gap-2 mb-1">
+                    <span class="text-[10px] font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-md">1. استيقاظ العطلة</span>
+                    <span class="text-xs text-emerald-600 group-hover:scale-110 transition">🔊</span>
+                  </div>
+                  <p class="en-font font-black text-slate-800 text-sm sm:text-base leading-snug" id="ex4-text-1">
+                    "I woke up at nine o'clock and had breakfast with my family."
+                  </p>
+                  <p class="text-[11px] font-bold text-slate-500 mt-1.5 pt-1 border-t border-slate-100 arabic-sub" dir="rtl">
+                    استيقظت عند الساعة التاسعة وتناولت الإفطار مع عائلتي.
+                  </p>
+                </div>
+
+                <!-- Bubble 2: What she ate & drank -->
+                <div onclick="speakDialogueLine(3)" id="ex4-bubble-3" class="cursor-pointer bg-white border-2 border-emerald-400 p-3 sm:p-3.5 rounded-2xl shadow-xs hover:bg-emerald-50/50 transition relative group">
+                  <div class="flex items-center justify-between gap-2 mb-1">
+                    <span class="text-[10px] font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-md">3. تفاصيل الوجبة</span>
+                    <span class="text-xs text-emerald-600 group-hover:scale-110 transition">🔊</span>
+                  </div>
+                  <p class="en-font font-black text-slate-800 text-sm sm:text-base leading-snug" id="ex4-text-3">
+                    "I ate fruit with yogurt, and I drank apple juice. Then ..."
+                  </p>
+                  <p class="text-[11px] font-bold text-slate-500 mt-1.5 pt-1 border-t border-slate-100 arabic-sub" dir="rtl">
+                    أكلت فواكه مع الزبادي، وشربت عصير التفاح. ثم ...
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- RIGHT: Girl 2 (Sarah - Curly hair) asking question -->
+            <div class="md:col-span-5 flex flex-col sm:flex-row-reverse items-center sm:items-start gap-4">
+              <!-- Girl 2 Avatar -->
+              <div class="flex flex-col items-center shrink-0">
+                <div class="w-20 h-20 rounded-3xl bg-amber-100 border-3 border-amber-400 shadow-md flex items-center justify-center text-4xl transform rotate-3 hover:scale-105 transition">
+                  👧🏾💬
+                </div>
+                <span class="text-xs font-black text-amber-700 mt-1.5 bg-white px-2 py-0.5 rounded-full shadow-2xs border border-amber-200">Sarah</span>
+              </div>
+
+              <!-- Girl 2 Bubble -->
+              <div class="flex-1 w-full">
+                <div onclick="speakDialogueLine(2)" id="ex4-bubble-2" class="cursor-pointer bg-white border-2 border-amber-400 p-3.5 rounded-2xl shadow-xs hover:bg-amber-50/50 transition relative group">
+                  <div class="flex items-center justify-between gap-2 mb-1">
+                    <span class="text-[10px] font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md">2. سؤال الصديقة</span>
+                    <span class="text-xs text-amber-600 group-hover:scale-110 transition">🔊</span>
+                  </div>
+                  <p class="en-font font-black text-slate-800 text-sm sm:text-base leading-snug" id="ex4-text-2">
+                    "What did you eat?"
+                  </p>
+                  <p class="text-[11px] font-bold text-slate-500 mt-1.5 pt-1 border-t border-slate-100 arabic-sub" dir="rtl">
+                    ماذا أكلتِ؟
+                  </p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- =========================================================================
+           EXERCISE 5: LOOK, READ, AND COMPLETE (SUPERLATIVES WITH 6 PICTURES)
+           ========================================================================= -->
+      <section class="mb-10 pt-6 border-t-3 border-dashed border-sky-200" id="sectionExercise5">
+        
+        <!-- Exercise Title Header (Centered) -->
+        <div class="flex flex-col items-center justify-center text-center mb-5 gap-1.5">
+          <div class="flex items-center justify-center gap-2 flex-wrap" dir="ltr">
+            <span class="w-8 h-8 rounded-full bg-amber-500 text-white font-black text-sm flex items-center justify-center shrink-0 shadow-xs">
+              5
+            </span>
+            <h2 class="en-font font-black text-lg sm:text-xl text-slate-800 flex items-center gap-2 flex-wrap justify-center">
+              <span>Look, read, and complete. ✏️</span>
+            </h2>
+          </div>
+          <p class="text-xs sm:text-sm font-bold text-slate-500" dir="rtl">
+            انظر للصور واقرأ ثم أكمل بصيغة التفضيل المناسبة (Superlative Adjectives)
+          </p>
+        </div>
+
+        <!-- Draggable Word Bank (Superlative Adjectives) -->
+        <div class="mb-6 bg-gradient-to-r from-sky-50 via-indigo-50 to-purple-50 border-2 border-sky-300 rounded-3xl p-3.5 sm:p-4 shadow-inner">
+          <div class="flex items-center justify-between mb-2.5 flex-wrap gap-2">
+            <span class="text-xs sm:text-sm font-black text-slate-800 flex items-center gap-1.5">
+              <span>📦</span>
+              <span>صندوق صيغ التفضيل (اسحب الكلمة أو انقر عليها ثم انقر في الفراغ):</span>
+            </span>
+            <span class="text-[11px] font-bold text-sky-800 bg-white px-2.5 py-0.5 rounded-full border border-sky-200 shadow-2xs">
+              Superlatives (-est / most)
+            </span>
+          </div>
+
+          <div id="superlativeWordBank" class="flex flex-wrap items-center justify-center gap-2.5 sm:gap-3" dir="ltr">
+            <!-- Rendered dynamically -->
+          </div>
+        </div>
+
+        <!-- 6 Picture Cards Grid (2 rows x 3 columns) matching Page 9 -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-5" dir="ltr">
+          
+          <!-- Card 1: Two boys comparing height (tall -> tallest) -->
+          <div class="flex flex-col bg-white border-2 border-slate-200 rounded-3xl p-3 shadow-xs hover:border-sky-400 transition" id="card-ex5-1">
+            <div class="h-36 rounded-2xl bg-gradient-to-br from-sky-100 to-blue-200 border border-slate-200 p-2 flex flex-col items-center justify-center relative overflow-hidden mb-3">
+              <span class="absolute top-2 left-2 w-7 h-7 rounded-full bg-sky-500 text-white font-black text-xs flex items-center justify-center shadow-xs">
+                1
+              </span>
+              <!-- Illustration: Height Comparison -->
+              <div class="flex items-end justify-center gap-3 h-full pb-1">
+                <div class="flex flex-col items-center">
+                  <span class="text-2xl">👦🏻</span>
+                  <div class="w-7 h-12 bg-blue-500 rounded-t-lg"></div>
+                </div>
+                <div class="flex flex-col items-center">
+                  <span class="text-3xl">🧑🏽📏</span>
+                  <div class="w-8 h-20 bg-indigo-600 rounded-t-lg"></div>
+                </div>
+              </div>
+              <span class="absolute bottom-1 right-2 text-[10px] font-bold text-sky-900 bg-white/90 px-1.5 py-0.5 rounded-md">Height comparison</span>
+            </div>
+
+            <!-- Sentence 1 -->
+            <div class="en-font text-xs sm:text-sm text-slate-800 leading-relaxed flex flex-col gap-1.5">
+              <div class="flex items-center gap-1.5 flex-wrap">
+                <span class="font-bold text-slate-900">1 He is the</span>
+                <span id="slot-ex5-1"></span>
+                <span class="text-slate-400 font-semibold">(tall)</span>
+              </div>
+              <p class="font-bold text-slate-800">student.</p>
+            </div>
+
+            <div class="mt-2 pt-1.5 border-t border-slate-100 flex items-center justify-between">
+              <span class="text-[11px] font-bold text-slate-500 arabic-sub" dir="rtl">هو أطول طالب في الصف.</span>
+              <button onclick="speakEx5Sentence(1)" class="w-7 h-7 rounded-lg bg-sky-50 hover:bg-sky-100 text-sky-700 flex items-center justify-center text-xs transition" title="استمع للجملة">
+                🔊
+              </button>
+            </div>
+          </div>
+
+          <!-- Card 2: Classroom desks (big -> biggest) -->
+          <div class="flex flex-col bg-white border-2 border-slate-200 rounded-3xl p-3 shadow-xs hover:border-amber-400 transition" id="card-ex5-2">
+            <div class="h-36 rounded-2xl bg-gradient-to-br from-amber-100 to-orange-200 border border-slate-200 p-2 flex flex-col items-center justify-center relative overflow-hidden mb-3">
+              <span class="absolute top-2 left-2 w-7 h-7 rounded-full bg-amber-500 text-white font-black text-xs flex items-center justify-center shadow-xs">
+                2
+              </span>
+              <!-- Illustration: Classroom -->
+              <div class="text-4xl transform hover:scale-110 transition">🏫🪑📚</div>
+              <span class="absolute bottom-1 right-2 text-[10px] font-bold text-amber-900 bg-white/90 px-1.5 py-0.5 rounded-md">Classroom</span>
+            </div>
+
+            <!-- Sentence 2 -->
+            <div class="en-font text-xs sm:text-sm text-slate-800 leading-relaxed flex flex-col gap-1.5">
+              <div class="flex items-center gap-1.5 flex-wrap">
+                <span class="font-bold text-slate-900">2 This is the</span>
+                <span id="slot-ex5-2"></span>
+                <span class="text-slate-400 font-semibold">(big)</span>
+              </div>
+              <p class="font-bold text-slate-800">classroom.</p>
+            </div>
+
+            <div class="mt-2 pt-1.5 border-t border-slate-100 flex items-center justify-between">
+              <span class="text-[11px] font-bold text-slate-500 arabic-sub" dir="rtl">هذا هو أكبر فصل دراسي.</span>
+              <button onclick="speakEx5Sentence(2)" class="w-7 h-7 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-700 flex items-center justify-center text-xs transition" title="استمع للجملة">
+                🔊
+              </button>
+            </div>
+          </div>
+
+          <!-- Card 3: School Bus journey (long -> longest) -->
+          <div class="flex flex-col bg-white border-2 border-slate-200 rounded-3xl p-3 shadow-xs hover:border-pink-400 transition" id="card-ex5-3">
+            <div class="h-36 rounded-2xl bg-gradient-to-br from-pink-100 to-rose-200 border border-slate-200 p-2 flex flex-col items-center justify-center relative overflow-hidden mb-3">
+              <span class="absolute top-2 left-2 w-7 h-7 rounded-full bg-pink-500 text-white font-black text-xs flex items-center justify-center shadow-xs">
+                3
+              </span>
+              <!-- Illustration: Bus -->
+              <div class="text-4xl transform hover:scale-110 transition">🚌👧🏻🛣️</div>
+              <span class="absolute bottom-1 right-2 text-[10px] font-bold text-pink-900 bg-white/90 px-1.5 py-0.5 rounded-md">Bus distance</span>
+            </div>
+
+            <!-- Sentence 3 -->
+            <div class="en-font text-xs sm:text-sm text-slate-800 leading-relaxed flex flex-col gap-1.5">
+              <div class="flex items-center gap-1.5 flex-wrap">
+                <span class="font-bold text-slate-900">3 She travels the</span>
+                <span id="slot-ex5-3"></span>
+                <span class="text-slate-400 font-semibold">(long)</span>
+              </div>
+              <p class="font-bold text-slate-800">distance to get to school.</p>
+            </div>
+
+            <div class="mt-2 pt-1.5 border-t border-slate-100 flex items-center justify-between">
+              <span class="text-[11px] font-bold text-slate-500 arabic-sub" dir="rtl">هي تقطع أطول مسافة للوصول للمدرسة.</span>
+              <button onclick="speakEx5Sentence(3)" class="w-7 h-7 rounded-lg bg-pink-50 hover:bg-pink-100 text-pink-700 flex items-center justify-center text-xs transition" title="استمع للجملة">
+                🔊
+              </button>
+            </div>
+          </div>
+
+          <!-- Card 4: Girl happy studying (easy -> easiest) -->
+          <div class="flex flex-col bg-white border-2 border-slate-200 rounded-3xl p-3 shadow-xs hover:border-emerald-400 transition" id="card-ex5-4">
+            <div class="h-36 rounded-2xl bg-gradient-to-br from-emerald-100 to-teal-200 border border-slate-200 p-2 flex flex-col items-center justify-center relative overflow-hidden mb-3">
+              <span class="absolute top-2 left-2 w-7 h-7 rounded-full bg-emerald-500 text-white font-black text-xs flex items-center justify-center shadow-xs">
+                4
+              </span>
+              <!-- Illustration: Happy student -->
+              <div class="text-4xl transform hover:scale-110 transition">😄📖⭐</div>
+              <span class="absolute bottom-1 right-2 text-[10px] font-bold text-emerald-900 bg-white/90 px-1.5 py-0.5 rounded-md">Easy lesson</span>
+            </div>
+
+            <!-- Sentence 4 -->
+            <div class="en-font text-xs sm:text-sm text-slate-800 leading-relaxed flex flex-col gap-1.5">
+              <div class="flex items-center gap-1.5 flex-wrap">
+                <span class="font-bold text-slate-900">4 This is the</span>
+                <span id="slot-ex5-4"></span>
+                <span class="text-slate-400 font-semibold">(easy)</span>
+              </div>
+              <p class="font-bold text-slate-800">class for me.</p>
+            </div>
+
+            <div class="mt-2 pt-1.5 border-t border-slate-100 flex items-center justify-between">
+              <span class="text-[11px] font-bold text-slate-500 arabic-sub" dir="rtl">هذه هي الحصة الأسهل بالنسبة لي.</span>
+              <button onclick="speakEx5Sentence(4)" class="w-7 h-7 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs transition" title="استمع للجملة">
+                🔊
+              </button>
+            </div>
+          </div>
+
+          <!-- Card 5: Stressed girl with head in hands (difficult -> most difficult) -->
+          <div class="flex flex-col bg-white border-2 border-slate-200 rounded-3xl p-3 shadow-xs hover:border-purple-400 transition" id="card-ex5-5">
+            <div class="h-36 rounded-2xl bg-gradient-to-br from-purple-100 to-indigo-200 border border-slate-200 p-2 flex flex-col items-center justify-center relative overflow-hidden mb-3">
+              <span class="absolute top-2 left-2 w-7 h-7 rounded-full bg-purple-500 text-white font-black text-xs flex items-center justify-center shadow-xs">
+                5
+              </span>
+              <!-- Illustration: Stressed student -->
+              <div class="text-4xl transform hover:scale-110 transition">🤯✍️❓</div>
+              <span class="absolute bottom-1 right-2 text-[10px] font-bold text-purple-900 bg-white/90 px-1.5 py-0.5 rounded-md">Difficult lesson</span>
+            </div>
+
+            <!-- Sentence 5 -->
+            <div class="en-font text-xs sm:text-sm text-slate-800 leading-relaxed flex flex-col gap-1.5">
+              <div class="flex items-center gap-1.5 flex-wrap">
+                <span class="font-bold text-slate-900">5 This is the</span>
+                <span id="slot-ex5-5"></span>
+                <span class="text-slate-400 font-semibold">(difficult)</span>
+              </div>
+              <p class="font-bold text-slate-800">class for me.</p>
+            </div>
+
+            <div class="mt-2 pt-1.5 border-t border-slate-100 flex items-center justify-between">
+              <span class="text-[11px] font-bold text-slate-500 arabic-sub" dir="rtl">هذه هي الحصة الأكثر صعوبة بالنسبة لي.</span>
+              <button onclick="speakEx5Sentence(5)" class="w-7 h-7 rounded-lg bg-purple-50 hover:bg-purple-100 text-purple-700 flex items-center justify-center text-xs transition" title="استمع للجملة">
+                🔊
+              </button>
+            </div>
+          </div>
+
+          <!-- Card 6: Two laughing friends with popcorn (funny -> funniest) -->
+          <div class="flex flex-col bg-white border-2 border-slate-200 rounded-3xl p-3 shadow-xs hover:border-rose-400 transition" id="card-ex5-6">
+            <div class="h-36 rounded-2xl bg-gradient-to-br from-rose-100 to-pink-200 border border-slate-200 p-2 flex flex-col items-center justify-center relative overflow-hidden mb-3">
+              <span class="absolute top-2 left-2 w-7 h-7 rounded-full bg-rose-500 text-white font-black text-xs flex items-center justify-center shadow-xs">
+                6
+              </span>
+              <!-- Illustration: Laughing friends -->
+              <div class="text-4xl transform hover:scale-110 transition">👭🍿😂</div>
+              <span class="absolute bottom-1 right-2 text-[10px] font-bold text-rose-900 bg-white/90 px-1.5 py-0.5 rounded-md">Funny friends</span>
+            </div>
+
+            <!-- Sentence 6 -->
+            <div class="en-font text-xs sm:text-sm text-slate-800 leading-relaxed flex flex-col gap-1.5">
+              <div class="flex items-center gap-1.5 flex-wrap">
+                <span class="font-bold text-slate-900">6 She is my</span>
+                <span id="slot-ex5-6"></span>
+                <span class="text-slate-400 font-semibold">(funny)</span>
+              </div>
+              <p class="font-bold text-slate-800">friend.</p>
+            </div>
+
+            <div class="mt-2 pt-1.5 border-t border-slate-100 flex items-center justify-between">
+              <span class="text-[11px] font-bold text-slate-500 arabic-sub" dir="rtl">هي صديقتي الأكثر مرحاً وفكاهة.</span>
+              <button onclick="speakEx5Sentence(6)" class="w-7 h-7 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-700 flex items-center justify-center text-xs transition" title="استمع للجملة">
+                🔊
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- =========================================================================
+           EXERCISE 6: TWO-BOY ROLE PLAY GAME (ASK AND ANSWER)
+           ========================================================================= -->
+      <section class="mt-8 pt-6 border-t-3 border-dashed border-sky-200" id="sectionExercise6">
+        
+        <!-- Exercise Title Header (Centered) -->
+        <div class="flex flex-col items-center justify-center text-center mb-5 gap-1.5">
+          <div class="flex items-center justify-center gap-2 flex-wrap" dir="ltr">
+            <span class="w-8 h-8 rounded-full bg-emerald-600 text-white font-black text-sm flex items-center justify-center shrink-0 shadow-xs">
+              6
+            </span>
+            <h2 class="en-font font-black text-lg sm:text-xl text-slate-800 flex items-center gap-2 flex-wrap justify-center">
+              <span>Look at the sentences in Exercise 5. Then ask and answer.</span>
+            </h2>
+          </div>
+          <p class="text-xs sm:text-sm font-bold text-slate-500" dir="rtl">
+            لعبة لعب الأدوار بين الطالبين • واحد يسأل والآخر يجيب مع نطق كندي متزامن 👦🏽👦🏻
+          </p>
+        </div>
+
+        <!-- Role-Play Arena with Boy 1 (Ali - Black shirt) and Boy 2 (Omar - Saudi Thobe) -->
+        <div class="bg-gradient-to-r from-teal-50/60 via-white to-sky-50/60 border-3 border-teal-300 rounded-3xl p-4 sm:p-6 shadow-sm">
+          
+          <div class="flex items-center justify-between mb-4 border-b pb-3 border-teal-200 flex-wrap gap-2">
+            <div class="flex items-center gap-2">
+              <span class="text-xs sm:text-sm font-black text-teal-950 flex items-center gap-1.5">
+                <span>🎭</span>
+                <span>حوار المقارنة والتفضيل في المدرسة:</span>
+              </span>
+            </div>
+            <button onclick="playEx6FullDialogue()" id="playEx6Btn" class="px-4 py-1.5 rounded-xl bg-teal-600 hover:bg-teal-700 text-white text-xs font-black shadow-xs flex items-center gap-1.5 transition active:scale-95">
+              <span>▶️</span>
+              <span>تشغيل الحوار كاملاً</span>
+            </button>
+          </div>
+
+          <!-- Role-play Dialogues Stack -->
+          <div class="flex flex-col gap-4 max-w-2xl mx-auto" dir="ltr">
+            
+            <!-- Turn 1: Boy 1 (Left) Asks about the tallest student -->
+            <div class="flex items-start gap-3">
+              <div class="flex flex-col items-center shrink-0">
+                <div class="w-14 h-14 rounded-2xl bg-slate-800 text-white border-2 border-slate-600 shadow-sm flex items-center justify-center text-3xl">
+                  👦🏽
+                </div>
+                <span class="text-[10px] font-black text-slate-700 mt-1">Ali</span>
+              </div>
+
+              <div onclick="speakBoyLine(1)" id="ex6-bubble-1" class="cursor-pointer flex-1 bg-white border-2 border-emerald-400 p-3 sm:p-3.5 rounded-2xl shadow-xs hover:bg-emerald-50/40 transition">
+                <div class="flex items-center justify-between gap-1 mb-1">
+                  <span class="text-[10px] font-bold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-md">السؤال 1 (علي يسأل)</span>
+                  <span class="text-xs text-emerald-600">🔊</span>
+                </div>
+                <p class="en-font font-black text-slate-800 text-sm sm:text-base" id="ex6-text-1">
+                  "Who is the tallest student in our class?"
+                </p>
+                <p class="text-[11px] font-bold text-slate-500 mt-1 arabic-sub" dir="rtl">
+                  من هو أطول طالب في فصلنا؟
+                </p>
+              </div>
+            </div>
+
+            <!-- Turn 2: Boy 2 (Right - Saudi Thobe) Answers & Asks -->
+            <div class="flex items-start gap-3 flex-row-reverse">
+              <div class="flex flex-col items-center shrink-0">
+                <div class="w-14 h-14 rounded-2xl bg-sky-100 border-2 border-sky-400 shadow-sm flex items-center justify-center text-3xl">
+                  👦🏻🇸🇦
+                </div>
+                <span class="text-[10px] font-black text-sky-800 mt-1">Omar (ثوب)</span>
+              </div>
+
+              <div onclick="speakBoyLine(2)" id="ex6-bubble-2" class="cursor-pointer flex-1 bg-white border-2 border-sky-400 p-3 sm:p-3.5 rounded-2xl shadow-xs hover:bg-sky-50/40 transition text-right">
+                <div class="flex items-center justify-between gap-1 mb-1 flex-row-reverse">
+                  <span class="text-[10px] font-bold text-sky-800 bg-sky-100 px-2 py-0.5 rounded-md">الجواب والسؤال 2 (عمر يجيب ويسأل)</span>
+                  <span class="text-xs text-sky-600">🔊</span>
+                </div>
+                <p class="en-font font-black text-slate-800 text-sm sm:text-base" id="ex6-text-2">
+                  "I think Marco is the tallest student. Which is the biggest classroom?"
+                </p>
+                <p class="text-[11px] font-bold text-slate-500 mt-1 arabic-sub" dir="rtl">
+                  أعتقد أن ماركو هو الأطول. وأي فصل هو الأكبر؟
+                </p>
+              </div>
+            </div>
+
+            <!-- Turn 3: Boy 1 (Left) Answers about the biggest classroom -->
+            <div class="flex items-start gap-3">
+              <div class="flex flex-col items-center shrink-0">
+                <div class="w-14 h-14 rounded-2xl bg-slate-800 text-white border-2 border-slate-600 shadow-sm flex items-center justify-center text-3xl">
+                  👦🏽
+                </div>
+                <span class="text-[10px] font-black text-slate-700 mt-1">Ali</span>
+              </div>
+
+              <div onclick="speakBoyLine(3)" id="ex6-bubble-3" class="cursor-pointer flex-1 bg-white border-2 border-emerald-400 p-3 sm:p-3.5 rounded-2xl shadow-xs hover:bg-emerald-50/40 transition">
+                <div class="flex items-center justify-between gap-1 mb-1">
+                  <span class="text-[10px] font-bold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-md">الجواب 3 (علي يجيب)</span>
+                  <span class="text-xs text-emerald-600">🔊</span>
+                </div>
+                <p class="en-font font-black text-slate-800 text-sm sm:text-base" id="ex6-text-3">
+                  "The science lab is the biggest classroom in the school."
+                </p>
+                <p class="text-[11px] font-bold text-slate-500 mt-1 arabic-sub" dir="rtl">
+                  معمل العلوم هو أكبر قاعة دراسية في المدرسة.
+                </p>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- PAGE FOOTER: MoE Logo, Page 9 Badge with colorful dots -->
+      <footer class="mt-10 pt-4 border-t-2 border-slate-100 flex items-center justify-between relative px-2 sm:px-6">
+        
+        <!-- Left: Saudi Ministry of Education Logo -->
+        <div class="flex items-center gap-3">
+          <div class="flex flex-col items-start">
+            <div class="flex items-center gap-0.5 text-teal-700 text-lg leading-none mb-0.5">
+              <span>📗</span><span>❖</span><span>📘</span>
+            </div>
+            <span class="text-[11px] font-black text-teal-800 leading-none">وزارة التعليم</span>
+            <span class="text-[8px] font-bold text-slate-400 leading-none mt-0.5">Ministry of Education</span>
+          </div>
+        </div>
+
+        <!-- Center: Quick Audio Practice Guide -->
+        <div class="hidden sm:flex items-center gap-1.5 text-xs text-slate-400 font-bold" dir="rtl">
+          <span>🎧 منهج اللغة الإنجليزية</span>
+        </div>
+
+        <!-- Right: Page 9 Badge with colorful circles matching Page 9 -->
+        <div class="flex items-center gap-2">
+          <div class="relative flex items-center justify-center">
+            <!-- Decorative dots around page number -->
+            <span class="w-3.5 h-3.5 rounded-full bg-amber-400 absolute -top-1 -right-1 shadow-xs"></span>
+            <span class="w-3.5 h-3.5 rounded-full bg-orange-400 absolute -bottom-1 -left-1 shadow-xs"></span>
+            <span class="w-3.5 h-3.5 rounded-full bg-sky-400 absolute -bottom-1 -right-1 shadow-xs"></span>
+            
+            <div class="w-11 h-11 rounded-full bg-sky-500 text-white font-black en-text text-xl flex items-center justify-center shadow-md border-2 border-white z-10">
+              9
+            </div>
+          </div>
+        </div>
+
+      </footer>
+
+    </main>
+
+    <!-- Bottom Action Ribbon -->
+    <div class="no-print w-full mt-4 flex items-center justify-center gap-3 flex-wrap">
+      <button onclick="window.print()" class="px-5 py-2.5 rounded-2xl bg-white hover:bg-slate-50 border-2 border-slate-300 text-slate-700 font-bold text-sm shadow-sm flex items-center gap-2 transition">
+        <span>🖨️</span>
+        <span>طباعة ورقة العمل</span>
+      </button>
+      <button onclick="checkAllEx5Answers()" class="px-6 py-2.5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-black text-sm shadow-md flex items-center gap-2 transition active:scale-95">
+        <span>✅</span>
+        <span>التحقق من جميع الإجابات</span>
+      </button>
+    </div>
+
+  </div>
+
+  <!-- Instant Feedback Modal Toast -->
+  <div id="toastNotification" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 pointer-events-none transition-all duration-300 transform translate-y-28 opacity-0">
+    <div class="bg-slate-900 text-white px-6 py-3.5 rounded-2xl shadow-2xl border-2 border-sky-400 flex items-center gap-3 backdrop-blur-md">
+      <span id="toastIcon" class="text-2xl">✨</span>
+      <div>
+        <p id="toastTitle" class="text-base font-black text-white"></p>
+        <p id="toastMsg" class="text-xs text-slate-200 font-medium"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    /* =========================================================================
+       1. WEB AUDIO SYNTHESIZER (INSTANT CHIMES)
+       ========================================================================= */
+    class SoundFX {
+      constructor() {
+        this.ctx = null;
+      }
+      init() {
+        if (!this.ctx) {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          if (AudioContext) this.ctx = new AudioContext();
+        }
+        if (this.ctx && this.ctx.state === 'suspended') {
+          this.ctx.resume();
+        }
+      }
+      playSuccess() {
+        this.init();
+        if (!this.ctx) return;
+        const now = this.ctx.currentTime;
+        const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
+        notes.forEach((freq, idx) => {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(freq, now + idx * 0.08);
+          gain.gain.setValueAtTime(0.001, now + idx * 0.08);
+          gain.gain.exponentialRampToValueAtTime(0.2, now + idx * 0.08 + 0.02);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.08 + 0.28);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start(now + idx * 0.08);
+          osc.stop(now + idx * 0.08 + 0.3);
+        });
+      }
+      playError() {
+        this.init();
+        if (!this.ctx) return;
+        const now = this.ctx.currentTime;
+        const notes = [280, 220];
+        notes.forEach((freq, idx) => {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(freq, now + idx * 0.12);
+          gain.gain.setValueAtTime(0.15, now + idx * 0.12);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.12 + 0.22);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start(now + idx * 0.12);
+          osc.stop(now + idx * 0.12 + 0.24);
+        });
+      }
+      playPop() {
+        this.init();
+        if (!this.ctx) return;
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.frequency.setValueAtTime(450, now);
+        osc.frequency.exponentialRampToValueAtTime(800, now + 0.06);
+        gain.gain.setValueAtTime(0.12, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.07);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.08);
+      }
+    }
+    const sfx = new SoundFX();
+
+    /* =========================================================================
+       2. CANADIAN SPEAKER & ARABIC FEEDBACK SYNTHESIZER
+       ========================================================================= */
+    class CanadianSpeaker {
+      constructor() {
+        this.synth = window.speechSynthesis;
+        this.voice = null;
+        this.initVoice();
+        if (this.synth && this.synth.onvoiceschanged !== undefined) {
+          this.synth.onvoiceschanged = () => this.initVoice();
+        }
+      }
+      initVoice() {
+        if (!this.synth) return;
+        const voices = this.synth.getVoices();
+        // Priority: Canadian English -> US / UK Natural Female -> English
+        this.voice = voices.find(v => v.lang === 'en-CA' || v.lang.includes('CA') || (v.lang.startsWith('en') && v.name.toLowerCase().includes('canada')))
+          || voices.find(v => v.lang.startsWith('en') && (v.name.toLowerCase().includes('female') || v.name.toLowerCase().includes('samantha') || v.name.toLowerCase().includes('zira')))
+          || voices.find(v => v.lang.startsWith('en'))
+          || null;
+      }
+      speak(text, onEndCallback = null, onBoundaryCallback = null) {
+        if (!this.synth) { if (onEndCallback) onEndCallback(); return; }
+        this.synth.cancel();
+        const utter = new SpeechSynthesisUtterance(text);
+        if (this.voice) utter.voice = this.voice;
+        utter.lang = 'en-CA';
+        utter.rate = 0.85; // Calm, clear classroom cadence
+        utter.pitch = 1.05;
+        utter.volume = 1.0;
+
+        if (onBoundaryCallback) {
+          utter.onboundary = (e) => onBoundaryCallback(e);
+        }
+        if (onEndCallback) {
+          utter.onend = () => onEndCallback();
+          utter.onerror = () => onEndCallback();
+        }
+        this.synth.speak(utter);
+      }
+      testVoice() {
+        sfx.playPop();
+        this.speak("Hello everyone! Welcome to page nine. Let's practice Superlatives!");
+        showFeedbackToast(true, "تم تفعيل الصوت الكندي الإنجليزي بنقاء ووضوح 🇨🇦");
+      }
+    }
+    const canadianSpeaker = new CanadianSpeaker();
+
+    // Arabic vocal feedback: "الإجابة صحيحة" / "إجابة خاطئة"
+    function speakArabicFeedback(isCorrect, callback = null) {
+      try {
+        if ('speechSynthesis' in window) {
+          window.speechSynthesis.cancel();
+          const phrase = isCorrect ? "الإجابة صحيحة" : "إجابة خاطئة";
+          const utter = new SpeechSynthesisUtterance(phrase);
+          utter.lang = 'ar-SA';
+          utter.rate = 0.95;
+          utter.pitch = 1.05;
+          utter.volume = 1.0;
+          const voices = window.speechSynthesis.getVoices();
+          const arVoice = voices.find(v => v.lang && (v.lang.startsWith('ar') || v.lang.includes('AR')));
+          if (arVoice) utter.voice = arVoice;
+          if (callback) {
+            utter.onend = () => callback();
+            utter.onerror = () => callback();
+          }
+          window.speechSynthesis.speak(utter);
+        } else if (callback) {
+          callback();
+        }
+      } catch (err) {
+        if (callback) callback();
+      }
+    }
+
+    // Modal Toast for Feedback
+    function showFeedbackToast(isCorrect, message) {
+      const toast = document.getElementById('toastNotification');
+      if (!toast) return;
+      const inner = toast.querySelector('div');
+      const title = document.getElementById('toastTitle');
+      const msg = document.getElementById('toastMsg');
+      const icon = document.getElementById('toastIcon');
+
+      if (isCorrect) {
+        inner.className = "bg-emerald-600 text-white px-6 py-3.5 rounded-2xl shadow-2xl border-2 border-emerald-300 flex items-center gap-3 backdrop-blur-md transform scale-105 transition duration-200";
+        icon.textContent = "✅";
+        title.textContent = "الإجابة صحيحة";
+        msg.textContent = message || "أحسنت! إجابة ممتازة ودقيقة.";
+      } else {
+        inner.className = "bg-rose-600 text-white px-6 py-3.5 rounded-2xl shadow-2xl border-2 border-rose-300 flex items-center gap-3 backdrop-blur-md transform scale-105 transition duration-200";
+        icon.textContent = "❌";
+        title.textContent = "إجابة خاطئة";
+        msg.textContent = message || "حاول مرة أخرى!";
+      }
+
+      toast.classList.remove('translate-y-28', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+
+      clearTimeout(toast._timeout);
+      toast._timeout = setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-28', 'opacity-0');
+      }, 2500);
+    }
+
+    /* =========================================================================
+       3. EXERCISE 4: TWO-GIRL WEEKEND DIALOGUE
+       ========================================================================= */
+    const EX4_LINES = [
+      { id: 1, bubbleId: "ex4-bubble-1", textId: "ex4-text-1", speaker: "Noura", text: "I woke up at nine o'clock and had breakfast with my family." },
+      { id: 2, bubbleId: "ex4-bubble-2", textId: "ex4-text-2", speaker: "Sarah", text: "What did you eat?" },
+      { id: 3, bubbleId: "ex4-bubble-3", textId: "ex4-text-3", speaker: "Noura", text: "I ate fruit with yogurt, and I drank apple juice. Then ..." }
+    ];
+
+    function setupKaraokeText(elementId, text) {
+      const el = document.getElementById(elementId);
+      if (!el) return [];
+      const words = text.split(/\s+/);
+      el.innerHTML = words.map((w, idx) => `<span class="k-word" id="${elementId}-w-${idx}">${w}</span>`).join(' ');
+      return words;
+    }
+
+    function speakDialogueLine(lineId) {
+      sfx.playPop();
+      const line = EX4_LINES.find(l => l.id === lineId);
+      if (!line) return;
+
+      document.querySelectorAll('#sectionExercise4 .sync-active-bubble').forEach(b => b.classList.remove('sync-active-bubble'));
+      const bubble = document.getElementById(line.bubbleId);
+      if (bubble) bubble.classList.add('sync-active-bubble');
+
+      const words = setupKaraokeText(line.textId, line.text);
+      let currentWordIdx = 0;
+
+      canadianSpeaker.speak(
+        line.text,
+        () => {
+          if (bubble) bubble.classList.remove('sync-active-bubble');
+          document.querySelectorAll(`#${line.textId} .k-word`).forEach(w => w.classList.remove('k-active'));
+        },
+        (event) => {
+          if (event.name === 'word') {
+            document.querySelectorAll(`#${line.textId} .k-word`).forEach(w => w.classList.remove('k-active'));
+            const wordEl = document.getElementById(`${line.textId}-w-${currentWordIdx}`);
+            if (wordEl) wordEl.classList.add('k-active');
+            currentWordIdx++;
+          }
+        }
+      );
+    }
+
+    function playEx4FullDialogue() {
+      sfx.playPop();
+      let index = 0;
+      const btn = document.getElementById('playEx4Btn');
+      btn.innerHTML = `<span>⏹️</span><span>جارٍ التشغيل...</span>`;
+
+      function playNext() {
+        if (index >= EX4_LINES.length) {
+          btn.innerHTML = `<span>▶️</span><span>تشغيل المحادثة كاملة</span>`;
+          document.querySelectorAll('#sectionExercise4 .sync-active-bubble').forEach(b => b.classList.remove('sync-active-bubble'));
+          return;
+        }
+
+        const line = EX4_LINES[index];
+        const bubble = document.getElementById(line.bubbleId);
+        document.querySelectorAll('#sectionExercise4 .sync-active-bubble').forEach(b => b.classList.remove('sync-active-bubble'));
+        if (bubble) bubble.classList.add('sync-active-bubble');
+
+        setupKaraokeText(line.textId, line.text);
+        let currentWordIdx = 0;
+
+        canadianSpeaker.speak(
+          line.text,
+          () => {
+            if (bubble) bubble.classList.remove('sync-active-bubble');
+            index++;
+            setTimeout(playNext, 600);
+          },
+          (event) => {
+            if (event.name === 'word') {
+              document.querySelectorAll(`#${line.textId} .k-word`).forEach(w => w.classList.remove('k-active'));
+              const wordEl = document.getElementById(`${line.textId}-w-${currentWordIdx}`);
+              if (wordEl) wordEl.classList.add('k-active');
+              currentWordIdx++;
+            }
+          }
+        );
+      }
+
+      playNext();
+    }
+
+    /* =========================================================================
+       4. EXERCISE 5: SUPERLATIVES (DATA, DRAG & DROP, AUDIO FEEDBACK)
+       ========================================================================= */
+    const SUPERLATIVE_ITEMS = [
+      { id: 1, base: "tall", correct: "tallest", cardId: "card-ex5-1", fullSentence: "He is the tallest student.", arabic: "هو أطول طالب في الصف." },
+      { id: 2, base: "big", correct: "biggest", cardId: "card-ex5-2", fullSentence: "This is the biggest classroom.", arabic: "هذا هو أكبر فصل دراسي." },
+      { id: 3, base: "long", correct: "longest", cardId: "card-ex5-3", fullSentence: "She travels the longest distance to get to school.", arabic: "هي تقطع أطول مسافة للوصول للمدرسة." },
+      { id: 4, base: "easy", correct: "easiest", cardId: "card-ex5-4", fullSentence: "This is the easiest class for me.", arabic: "هذه هي الحصة الأسهل بالنسبة لي." },
+      { id: 5, base: "difficult", correct: "most difficult", cardId: "card-ex5-5", fullSentence: "This is the most difficult class for me.", arabic: "هذه هي الحصة الأكثر صعوبة بالنسبة لي." },
+      { id: 6, base: "funny", correct: "funniest", cardId: "card-ex5-6", fullSentence: "She is my funniest friend.", arabic: "هي صديقتي الأكثر مرحاً وفكاهة." }
+    ];
+
+    const SUPERLATIVE_PILLS = [
+      { text: "tallest", base: "tall" },
+      { text: "biggest", base: "big" },
+      { text: "longest", base: "long" },
+      { text: "easiest", base: "easy" },
+      { text: "most difficult", base: "difficult" },
+      { text: "funniest", base: "funny" }
+    ];
+
+    const ex5SlotsState = { 1: null, 2: null, 3: null, 4: null, 5: null, 6: null };
+    let selectedSuperlativeWord = null;
+
+    function renderSuperlativeWordBank() {
+      const bank = document.getElementById('superlativeWordBank');
+      bank.innerHTML = '';
+
+      SUPERLATIVE_PILLS.forEach(p => {
+        const pill = document.createElement('div');
+        pill.id = `pill-sup-${p.text.replace(/\s+/g, '-')}`;
+        pill.className = "word-pill px-4 py-2 rounded-2xl bg-white border-2 border-sky-400 text-sky-950 font-black en-font text-sm sm:text-base shadow-xs hover:bg-sky-50 transition flex items-center gap-1.5";
+        pill.setAttribute('draggable', 'true');
+        pill.innerHTML = `<span>${p.text}</span> <span class="text-[10px] text-slate-400">(${p.base})</span>`;
+
+        pill.onclick = () => {
+          sfx.playPop();
+          canadianSpeaker.speak(p.text);
+          selectSuperlativePill(p.text, pill);
+        };
+
+        pill.ondragstart = (e) => {
+          e.dataTransfer.setData("text/plain", p.text);
+          selectedSuperlativeWord = p.text;
+          sfx.playPop();
+        };
+
+        bank.appendChild(pill);
+      });
+    }
+
+    function selectSuperlativePill(word, el) {
+      if (selectedSuperlativeWord === word) {
+        selectedSuperlativeWord = null;
+        el.classList.remove('selected-pill');
+      } else {
+        document.querySelectorAll('#superlativeWordBank .word-pill').forEach(p => p.classList.remove('selected-pill'));
+        selectedSuperlativeWord = word;
+        el.classList.add('selected-pill');
+        showFeedbackToast(true, `تم اختيار (${word}). انقر الآن على الفراغ المناسب في الصور`);
+      }
+    }
+
+    function renderEx5Slots() {
+      SUPERLATIVE_ITEMS.forEach(item => {
+        const container = document.getElementById(`slot-ex5-${item.id}`);
+        if (!container) return;
+
+        const val = ex5SlotsState[item.id];
+        const card = document.getElementById(item.cardId);
+
+        if (val) {
+          const isCorrect = (val.toLowerCase() === item.correct.toLowerCase());
+          if (isCorrect) {
+            if (card) card.className = card.className.replace(/border-[a-z]+-[0-9]+/, 'border-emerald-500 bg-emerald-50/20');
+            container.innerHTML = `
+              <span onclick="clearEx5Slot(${item.id})" class="cursor-pointer inline-flex items-center gap-1 bg-emerald-100 border-2 border-emerald-500 text-emerald-950 px-2.5 py-0.5 rounded-xl font-black en-font text-xs sm:text-sm hover:bg-rose-100 transition shadow-2xs" title="انقر للإزالة">
+                ${val} <span class="text-[10px] bg-emerald-600 text-white px-1 rounded-sm">✓</span>
+              </span>
+            `;
+          } else {
+            if (card) card.className = card.className.replace(/border-[a-z]+-[0-9]+/, 'border-rose-400 bg-rose-50/20');
+            container.innerHTML = `
+              <span onclick="clearEx5Slot(${item.id})" class="cursor-pointer inline-flex items-center gap-1 bg-rose-100 border-2 border-rose-400 text-rose-950 px-2.5 py-0.5 rounded-xl font-black en-font text-xs sm:text-sm line-through hover:bg-rose-200 transition shadow-2xs" title="انقر للتصحيح">
+                ${val} <span class="text-[10px] bg-rose-600 text-white px-1 rounded-sm">✗</span>
+              </span>
+            `;
+          }
+        } else {
+          container.innerHTML = `
+            <span onclick="handleEx5SlotClick(${item.id})" ondragover="event.preventDefault(); this.classList.add('drag-over');" ondragleave="this.classList.remove('drag-over');" ondrop="handleEx5Drop(event, ${item.id})" class="drop-slot inline-block border-b-2 border-dashed border-sky-500 bg-sky-50/60 hover:bg-sky-100 px-3 py-0.5 rounded-lg text-sky-800 text-xs font-bold cursor-pointer transition">
+              [ ......... ]
+            </span>
+          `;
+        }
+      });
+    }
+
+    function handleEx5Drop(e, slotId) {
+      e.preventDefault();
+      e.currentTarget.classList.remove('drag-over');
+      const word = e.dataTransfer.getData("text/plain") || selectedSuperlativeWord;
+      if (word) placeSuperlativeWord(slotId, word);
+    }
+
+    function handleEx5SlotClick(slotId) {
+      if (selectedSuperlativeWord) {
+        placeSuperlativeWord(slotId, selectedSuperlativeWord);
+      } else {
+        sfx.playPop();
+        showFeedbackToast(false, "اختر كلمة من صندوق صيغ التفضيل أولاً ثم انقر في الفراغ");
+      }
+    }
+
+    function clearEx5Slot(slotId) {
+      sfx.playPop();
+      ex5SlotsState[slotId] = null;
+      renderEx5Slots();
+      updateScoreBadge();
+    }
+
+    function placeSuperlativeWord(slotId, word) {
+      const item = SUPERLATIVE_ITEMS.find(i => i.id === slotId);
+      const isCorrect = (word.toLowerCase() === item.correct.toLowerCase());
+
+      ex5SlotsState[slotId] = word;
+      renderEx5Slots();
+      updateScoreBadge();
+
+      const card = document.getElementById(item.cardId);
+
+      if (isCorrect) {
+        sfx.playSuccess();
+        speakArabicFeedback(true, () => {
+          canadianSpeaker.speak(item.fullSentence);
+        });
+        if (card) {
+          card.classList.remove('shake-slot');
+          card.classList.add('pop-success');
+        }
+        showFeedbackToast(true, `ممتاز! (${word}) هي صيغة التفضيل الصحيحة لـ (${item.base})`);
+        fireConfetti(0.35);
+      } else {
+        sfx.playError();
+        speakArabicFeedback(false);
+        if (card) {
+          card.classList.remove('pop-success');
+          card.classList.add('shake-slot');
+        }
+        showFeedbackToast(false, `إجابة خاطئة! (${word}) غير مناسبة مع (${item.base}). انقر للإزالة`);
+      }
+    }
+
+    function speakEx5Sentence(slotId) {
+      const item = SUPERLATIVE_ITEMS.find(i => i.id === slotId);
+      const val = ex5SlotsState[slotId];
+      const textToSpeak = val ? item.fullSentence.replace(item.correct, val) : item.fullSentence;
+
+      const card = document.getElementById(item.cardId);
+      if (card) card.classList.add('sync-active-bubble');
+
+      canadianSpeaker.speak(textToSpeak, () => {
+        if (card) card.classList.remove('sync-active-bubble');
+      });
+    }
+
+    /* =========================================================================
+       5. EXERCISE 6: TWO-BOY ROLE PLAY GAME (ALI & OMAR)
+       ========================================================================= */
+    const EX6_LINES = [
+      { id: 1, bubbleId: "ex6-bubble-1", textId: "ex6-text-1", speaker: "Ali", text: "Who is the tallest student in our class?" },
+      { id: 2, bubbleId: "ex6-bubble-2", textId: "ex6-text-2", speaker: "Omar", text: "I think Marco is the tallest student. Which is the biggest classroom?" },
+      { id: 3, bubbleId: "ex6-bubble-3", textId: "ex6-text-3", speaker: "Ali", text: "The science lab is the biggest classroom in the school." }
+    ];
+
+    function speakBoyLine(lineId) {
+      sfx.playPop();
+      const line = EX6_LINES.find(l => l.id === lineId);
+      if (!line) return;
+
+      document.querySelectorAll('#sectionExercise6 .sync-active-bubble').forEach(b => b.classList.remove('sync-active-bubble'));
+      const bubble = document.getElementById(line.bubbleId);
+      if (bubble) bubble.classList.add('sync-active-bubble');
+
+      setupKaraokeText(line.textId, line.text);
+      let currentWordIdx = 0;
+
+      canadianSpeaker.speak(
+        line.text,
+        () => {
+          if (bubble) bubble.classList.remove('sync-active-bubble');
+          document.querySelectorAll(`#${line.textId} .k-word`).forEach(w => w.classList.remove('k-active'));
+        },
+        (event) => {
+          if (event.name === 'word') {
+            document.querySelectorAll(`#${line.textId} .k-word`).forEach(w => w.classList.remove('k-active'));
+            const wordEl = document.getElementById(`${line.textId}-w-${currentWordIdx}`);
+            if (wordEl) wordEl.classList.add('k-active');
+            currentWordIdx++;
+          }
+        }
+      );
+    }
+
+    function playEx6FullDialogue() {
+      sfx.playPop();
+      let index = 0;
+      const btn = document.getElementById('playEx6Btn');
+      btn.innerHTML = `<span>⏹️</span><span>جارٍ التشغيل...</span>`;
+
+      function playNext() {
+        if (index >= EX6_LINES.length) {
+          btn.innerHTML = `<span>▶️</span><span>تشغيل الحوار كاملاً</span>`;
+          document.querySelectorAll('#sectionExercise6 .sync-active-bubble').forEach(b => b.classList.remove('sync-active-bubble'));
+          return;
+        }
+
+        const line = EX6_LINES[index];
+        const bubble = document.getElementById(line.bubbleId);
+        document.querySelectorAll('#sectionExercise6 .sync-active-bubble').forEach(b => b.classList.remove('sync-active-bubble'));
+        if (bubble) bubble.classList.add('sync-active-bubble');
+
+        setupKaraokeText(line.textId, line.text);
+        let currentWordIdx = 0;
+
+        canadianSpeaker.speak(
+          line.text,
+          () => {
+            if (bubble) bubble.classList.remove('sync-active-bubble');
+            index++;
+            setTimeout(playNext, 600);
+          },
+          (event) => {
+            if (event.name === 'word') {
+              document.querySelectorAll(`#${line.textId} .k-word`).forEach(w => w.classList.remove('k-active'));
+              const wordEl = document.getElementById(`${line.textId}-w-${currentWordIdx}`);
+              if (wordEl) wordEl.classList.add('k-active');
+              currentWordIdx++;
+            }
+          }
+        );
+      }
+
+      playNext();
+    }
+
+    /* =========================================================================
+       6. GLOBAL CONTROLS, SCORE & TRANSLATION
+       ========================================================================= */
+    function updateScoreBadge() {
+      let score = 0;
+      SUPERLATIVE_ITEMS.forEach(i => {
+        if (ex5SlotsState[i.id] && ex5SlotsState[i.id].toLowerCase() === i.correct.toLowerCase()) {
+          score++;
+        }
+      });
+      document.getElementById('scoreDisplay').textContent = `${score} / 6`;
+      if (score === 6) {
+        fireConfetti(1.2);
+        showFeedbackToast(true, "تهانينا! أكملت جميع صيغ التفضيل بشكل صحيح 6 من 6 🌟");
+      }
+    }
+
+    function checkAllEx5Answers() {
+      sfx.playPop();
+      let score = 0;
+      SUPERLATIVE_ITEMS.forEach(i => {
+        if (ex5SlotsState[i.id] && ex5SlotsState[i.id].toLowerCase() === i.correct.toLowerCase()) {
+          score++;
+        }
+      });
+
+      if (score === 6) {
+        sfx.playSuccess();
+        speakArabicFeedback(true);
+        showFeedbackToast(true, "ما شاء الله! جميع إجاباتك صحيحة ومكتملة بنجاح 💯");
+        fireConfetti(1.0);
+      } else {
+        sfx.playError();
+        speakArabicFeedback(false);
+        showFeedbackToast(false, `لديك ${score} إجابات صحيحة من أصل 6. أكمل الفراغات المتبقية`);
+      }
+    }
+
+    function resetWorksheet() {
+      sfx.playPop();
+      for (let i = 1; i <= 6; i++) ex5SlotsState[i] = null;
+      selectedSuperlativeWord = null;
+      renderSuperlativeWordBank();
+      renderEx5Slots();
+      updateScoreBadge();
+      showFeedbackToast(true, "تم مسح جميع الإجابات لإعادة حل ورقة العمل من جديد 🔄");
+    }
+
+    let translationsVisible = true;
+    function toggleTranslations() {
+      translationsVisible = !translationsVisible;
+      document.querySelectorAll('.arabic-sub').forEach(el => {
+        el.style.display = translationsVisible ? 'block' : 'none';
+      });
+      document.getElementById('transBtnText').textContent = translationsVisible ? "إخفاء الترجمة" : "إظهار الترجمة";
+    }
+
+    function fireConfetti(power = 0.5) {
+      if (typeof confetti === 'function') {
+        confetti({
+          particleCount: Math.floor(75 * power),
+          spread: 80,
+          origin: { y: 0.6 }
+        });
+      }
+    }
+
+    /* =========================================================================
+       INITIALIZATION
+       ========================================================================= */
+    window.onload = function() {
+      renderSuperlativeWordBank();
+      renderEx5Slots();
+      updateScoreBadge();
+    };
+  </script>
+</body>
+</html>
